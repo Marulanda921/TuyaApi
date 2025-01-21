@@ -1,4 +1,3 @@
-<!-- card.component.html -->
 <ion-header>
   <ion-toolbar>
     <ion-title>Lector de Tarjetas</ion-title>
@@ -6,7 +5,6 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <!-- Botones principales -->
   <div class="ion-margin-bottom">
     <ion-button expand="block" 
               (click)="startSwipe()" 
@@ -23,12 +21,17 @@
       <ion-icon name="stop-circle" slot="start"></ion-icon>
       Cancelar Lectura
     </ion-button>
+
+    <ion-button expand="block" 
+              color="tertiary" 
+              (click)="printCardData()"
+              [disabled]="!trackData">
+      <ion-icon name="print-outline" slot="start"></ion-icon>
+      Imprimir Información
+    </ion-button>
   </div>
 
-  <!-- Loader -->
   <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
-
-  <!-- Mensaje de error -->
   <ion-item color="danger" *ngIf="lastError" class="ion-margin-top">
     <ion-icon name="alert-circle" slot="start"></ion-icon>
     <ion-label class="ion-text-wrap">{{ lastError }}</ion-label>
@@ -37,7 +40,6 @@
     </ion-button>
   </ion-item>
 
-  <!-- Datos leídos -->
   <ion-card *ngIf="trackData" class="ion-margin-top">
     <ion-card-header>
       <ion-card-title>

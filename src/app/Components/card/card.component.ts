@@ -1,4 +1,3 @@
-// card.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
@@ -19,6 +18,11 @@ interface MagneticCardPlugin {
 }
 
 const MagneticCard = registerPlugin<MagneticCardPlugin>('MagneticCard');
+interface PosPrinterPlugin {
+  printText(options: { text: string }): Promise<{ status: string }>;
+}
+
+const PosPrinter = registerPlugin<PosPrinterPlugin>('PosPrinter');
 
 @Component({
   selector: 'app-card',
@@ -34,10 +38,7 @@ export class CardComponent implements OnInit, OnDestroy {
   lastError: string | null = null;
   private readingInterval: any;
 
-  constructor(
-    private toastController: ToastController
-    
-  ) {}
+  constructor(private readonly toastController: ToastController) {}
 
   ngOnInit() {}
 
@@ -61,7 +62,6 @@ export class CardComponent implements OnInit, OnDestroy {
     this.trackData = null;
     
     try {
-      // Inicializar y abrir en secuencia
       await MagneticCard.init();
       await MagneticCard.open();
       await MagneticCard.startReading();
@@ -127,5 +127,20 @@ export class CardComponent implements OnInit, OnDestroy {
     this.lastError = null;
   }
 
-  
+  async printCardData() {
+    if (this.trackData) {
+      const text = `Track 1: ${this.trackData.track1}\nTrack 2: ${this.trackData.track2}\nTrack 3: ${this.trackData.track3}`;
+      try {
+        const result = await PosPrinter.printText({ text });
+        if (result.status === 'printed') {
+          await this.showToast('Datos de la tarjeta impresos correctamente', 'success');
+        }
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        await this.showToast('Error al imprimir: ' + errorMessage, 'danger');
+      }
+    } else {
+      await this.showToast('No hay datos de tarjeta para imprimir', 'warning');
+    }
+  }
 }
