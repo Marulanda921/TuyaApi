@@ -1,0 +1,10 @@
+{
+  "appId": "com.example.app",
+  "appName": "YourAppName",
+  "webDir": "www",
+  "plugins": {
+    "MagneticCard": {
+      "name": "MagneticCard"
+    }
+  }
+}

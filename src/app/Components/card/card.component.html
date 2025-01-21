@@ -1,0 +1,86 @@
+<!-- card.component.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Lector de Tarjetas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Botones principales -->
+  <div class="ion-margin-bottom">
+    <ion-button expand="block" 
+              (click)="startSwipe()" 
+              [disabled]="isReading || loading"
+              class="ion-margin-bottom">
+      <ion-icon name="card" slot="start"></ion-icon>
+      {{ isReading ? 'Esperando tarjeta...' : 'Deslizar Tarjeta' }}
+    </ion-button>
+
+    <ion-button expand="block" 
+              color="danger" 
+              (click)="stopReading()" 
+              [disabled]="!isReading || loading">
+      <ion-icon name="stop-circle" slot="start"></ion-icon>
+      Cancelar Lectura
+    </ion-button>
+  </div>
+
+  <!-- Loader -->
+  <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+
+  <!-- Mensaje de error -->
+  <ion-item color="danger" *ngIf="lastError" class="ion-margin-top">
+    <ion-icon name="alert-circle" slot="start"></ion-icon>
+    <ion-label class="ion-text-wrap">{{ lastError }}</ion-label>
+    <ion-button fill="clear" slot="end" (click)="clearError()">
+      <ion-icon name="close" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <!-- Datos leídos -->
+  <ion-card *ngIf="trackData" class="ion-margin-top">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="card-outline" class="ion-margin-end"></ion-icon>
+        Datos Leídos
+      </ion-card-title>
+      <ion-button fill="clear" size="small" (click)="clearData()" slot="end">
+        <ion-icon name="trash" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-card-header>
+    
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngIf="trackData.track1">
+          <ion-label>
+            <h2>Track 1</h2>
+            <p class="ion-text-wrap">{{ trackData.track1 }}</p>
+          </ion-label>
+          <ion-button fill="clear" slot="end">
+            <ion-icon name="copy" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-item>
+        
+        <ion-item *ngIf="trackData.track2">
+          <ion-label>
+            <h2>Track 2</h2>
+            <p class="ion-text-wrap">{{ trackData.track2 }}</p>
+          </ion-label>
+          <ion-button fill="clear" slot="end" >
+            <ion-icon name="copy" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-item>
+        
+        <ion-item *ngIf="trackData.track3">
+          <ion-label>
+            <h2>Track 3</h2>
+            <p class="ion-text-wrap">{{ trackData.track3 }}</p>
+          </ion-label>
+          <ion-button fill="clear" slot="end">
+            <ion-icon name="copy" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

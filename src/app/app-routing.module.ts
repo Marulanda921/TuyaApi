@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { CardComponent } from './Components/card/card.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,8 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+
+  {path: 'card', component: CardComponent},
 ];
 
 @NgModule({

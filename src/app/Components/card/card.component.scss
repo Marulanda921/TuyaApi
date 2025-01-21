@@ -1,0 +1,16 @@
+/* card.component.scss */
+
+/* Ejemplo de estilos personalizados */
+ion-header {
+    background-color: #3880ff;
+    color: #fff;
+  }
+  
+  ion-content {
+    --padding-start: 16px;
+    --padding-end: 16px;
+  }
+  
+  ion-button {
+    margin-bottom: 10px;
+  }
